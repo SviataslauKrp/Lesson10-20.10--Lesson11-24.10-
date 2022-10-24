@@ -1,3 +1,6 @@
+import exeptions.ContainsABCException;
+import exeptions.StartsWithFivesException;
+import exeptions.WrongTerminalSequenceException;
 
 public class Main {
 
@@ -15,11 +18,22 @@ public class Main {
         StringWorker.letterExtractor(docNumber);
         StringWorker.letterExtractorUC(docNumber);
 
-        StringWorker.checkSequence(docNumber);
+        try {
+            StringWorker.checkSequence(docNumber);
+        } catch (ContainsABCException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            StringWorker.startsWithFives(docNumber);
+        } catch (StartsWithFivesException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            StringWorker.endsWithSeq(docNumber);
+        } catch (WrongTerminalSequenceException e) {
+            System.out.println(e.getMessage());
+        }
 
-        StringWorker.startsWithFives(docNumber);
-
-        StringWorker.endsWithSeq(docNumber);
 
         System.out.println("The additional task");
 

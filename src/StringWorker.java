@@ -1,3 +1,7 @@
+import exeptions.ContainsABCException;
+import exeptions.StartsWithFivesException;
+import exeptions.WrongTerminalSequenceException;
+
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,13 +10,13 @@ public class StringWorker {
 
     private static final String DELIMITER = "==================================";
 
-    static void endsWithSeq(String docNumber) {
+    static void endsWithSeq(String docNumber) throws WrongTerminalSequenceException {
 
         System.out.println(DELIMITER);
         System.out.println("- Проверить заканчивается ли номер документа на\n" +
                 "последовательность 1a2b: ");
 
-        docNumber = "0857-cro-2348-sid-1a2b";
+        docNumber = "0857-cro-2348-sid-1g2y";
 
         boolean isEnds = docNumber.endsWith("1a2b");
 
@@ -21,12 +25,12 @@ public class StringWorker {
         if (isEnds) {
             System.out.println("Номер документа закачнивается на \"1a2b\"");
         } else {
-            System.out.println("Номер документа не закачнивается на \"1a2b\"");
+            throw new WrongTerminalSequenceException("Номер документа не закачнивается на \"1a2b\" (исключение)");
         }
         System.out.println(DELIMITER);
     }
 
-    static void startsWithFives(String docNumber) {
+    static void startsWithFives(String docNumber) throws StartsWithFivesException {
 
         System.out.println(DELIMITER);
 
@@ -36,12 +40,12 @@ public class StringWorker {
         if (isStartsWithFives) {
             System.out.println("Номер документа начинается с 555");
         } else {
-            System.out.println("Номер документа не начинается с 555");
+            throw new StartsWithFivesException("Номер документа не начинается с 555 (исключение)");
         }
 
     }
 
-    static void checkSequence(String docNumber) {
+    static void checkSequence(String docNumber) throws ContainsABCException {
 
         System.out.println(DELIMITER);
 
@@ -51,7 +55,7 @@ public class StringWorker {
                 одинаковой последовательностью).""");
 
         //для проверки корректности
-        docNumber = "0642-abc-8170-gor-1t8j";
+        docNumber = "0642-bac-8170-gor-1t8j";
         System.out.println("Номер документа: " + docNumber);
         final String pattern = "abc";
 
@@ -68,7 +72,7 @@ public class StringWorker {
         }
 
         if (!isMatched) {
-            System.out.println("Последовательность не найдена");
+            throw new ContainsABCException("Последовательность не найдена (исключение)");
         }
     }
 
@@ -148,7 +152,6 @@ public class StringWorker {
         result = new StringBuilder(result.toString().trim());
         if (result.length() > 0) {
             System.out.println("- Вывести на экран в одну строку два первых блока по 4 цифры: " + result);
-            ;
         } else {
             System.out.println("В данной строке нет искомой последовательности");
         }
